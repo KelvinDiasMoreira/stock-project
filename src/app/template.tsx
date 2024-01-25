@@ -1,14 +1,15 @@
-import { AlignJustify, User, UserRound, Wallet2 } from "lucide-react";
+import { Wallet2 } from "lucide-react";
 import UserDrop from "./components/UserDrop";
+import { ReactNode } from "react";
 
 interface TemplateProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function Template({ children }: TemplateProps) {
   return (
-    <main>
-      <header className="fixed h-20 flex top-0 bg-white w-full items-center justify-center gap-20">
+    <main >
+      <header className="h-20 flex top-0 bg-white w-full items-center justify-center gap-20">
         <div>
           <h1 className="text-3xl cursor-pointer">Ações Brasil</h1>
         </div>

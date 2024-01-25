@@ -17,35 +17,54 @@ export default function UserDrop({ ...props }: UserDrop) {
   ];
 
   const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
-  const [offsetSection, setOffSetSection] = useState<{
-    left: number;
-    bottom: number;
-  }>();
+  const [clickedFirstTime, setclickedFirstTime] = useState(false);
+  const [closing, setClosing] = useState(false)
+  // const [offsetSection, setOffSetSection] = useState<{
+  //   left: number;
+  //   bottom: number;
+  // }>();
   const openDropDownMenu = () => {
-    setDropDownIsOpen(true);
+    if (clickedFirstTime) {
+      setClosing(true)
+      setTimeout(() => {
+        setDropDownIsOpen(false);
+        setclickedFirstTime(false);
+        setClosing(false)
+      }, 400);
+    } else {
+      setDropDownIsOpen(true);
+      setclickedFirstTime(true);
+    }
   };
 
   useEffect(() => {
-    const verifyMouse = (e: MouseEvent) => {
+    const verifyMouse = (e: any) => {
       const sectionUser = window.document.getElementById("sectionUser");
-      const offSetSection = sectionUser?.getBoundingClientRect();
-      setOffSetSection({
-        left: offSetSection!.x,
-        bottom: offSetSection!.bottom,
-      });
+      const dropdown = window.document.getElementById("dropdownId");
+      const offsetSection = sectionUser?.getBoundingClientRect();
+      // const offsetDropdown = sectionUser?.getBoundingClientRect();
+
+      // setOffSetSection({
+      //   left: offsetSection!.x,
+      //   bottom: offsetSection!.bottom,
+      // });
       if (
-        offSetSection!.x > e.clientX ||
-        offSetSection!.right < e.clientX ||
-        offSetSection!.y > e.clientY ||
-        offSetSection!.bottom < e.clientY
+        (offsetSection!.x > e.clientX ||
+          offsetSection!.right < e.clientX ||
+          offsetSection!.y > e.clientY ||
+          offsetSection!.bottom < e.clientY) &&
+        dropdown !== null &&
+        !dropdown?.contains(e.target)
       ) {
         setDropDownIsOpen(false);
+        setclickedFirstTime(false);
       }
     };
-    window.addEventListener("mousedown", verifyMouse);
+
+    window.addEventListener("click", verifyMouse);
 
     return () => {
-      removeEventListener("mousedown", verifyMouse);
+      removeEventListener("click", verifyMouse);
     };
   }, []);
 
@@ -65,23 +84,29 @@ export default function UserDrop({ ...props }: UserDrop) {
           </div>
         </div>
       </section>
-      {dropDownIsOpen && offsetSection && (
         <div
+          id="dropdownId"
           style={{
-            top: `${offsetSection?.bottom + 20}px`,
-            left: `${offsetSection?.left - 120}px`,
+            // top: `${offsetSection?.bottom + 5}px`,
+            // left: `${offsetSection?.left - 155}px`,
+            top: `62px`,
+            left: `1050px`,
           }}
-          className={`absolute bg-white rounded-md shadow-md`}
+          className={`absolute ${closing && "animate-userDropDownAnimationOut"} ${dropDownIsOpen ? "animate-userDropDownAnimationIn" : "hidden"} bg-white rounded-md shadow-md min-w-[230px]`}
         >
           {itens.map((itens, index) => {
             return (
-              <div className="cursor-pointer p-4 hover:bg-[#e5e5e5] hover:text-[#a38c65] min-w-60 text-left">
-                <h1 className="text-[#333] font-bold text-sm" key={index}>{itens.value}</h1>
+              <div
+                className="cursor-pointer p-3 hover:bg-[#e5e5e5] group text-left duration-500"
+                key={index}
+              >
+                <h1 className="text-[#333] font-bold text-sm group-hover:text-[#a38c65] duration-300">
+                  {itens.value}
+                </h1>
               </div>
-            )
+            );
           })}
         </div>
-      )}
     </>
   );
 }

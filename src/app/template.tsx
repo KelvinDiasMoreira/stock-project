@@ -8,7 +8,7 @@ interface TemplateProps {
 export default function Template({ children }: TemplateProps) {
   return (
     <main>
-      <header className="fixed h-20 flex top-0 bg-white w-full items-center justify-center gap-6">
+      <header className="fixed h-20 flex top-0 bg-white w-full items-center justify-center gap-20">
         <div>
           <h1 className="text-3xl cursor-pointer">Ações Brasil</h1>
         </div>
@@ -35,7 +35,9 @@ export default function Template({ children }: TemplateProps) {
             </ul>
           </nav>
         </div>
+        <div>
         <UserDrop />
+        </div>
       </header>
       {children}
     </main>

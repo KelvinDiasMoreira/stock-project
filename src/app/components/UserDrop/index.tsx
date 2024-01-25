@@ -1,11 +1,21 @@
 "use client";
 import { AlignJustify, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
-import DropDownMenuFunction from "../DropDownMenuUser";
 
 export interface UserDrop {}
 
 export default function UserDrop({ ...props }: UserDrop) {
+  const itens: { value: string; path: string }[] = [
+    {
+      value: "Cadastre-se",
+      path: "test",
+    },
+    {
+      value: "Entrar",
+      path: "pathLogin",
+    },
+  ];
+
   const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
   const [offsetSection, setOffSetSection] = useState<{
     left: number;
@@ -58,12 +68,18 @@ export default function UserDrop({ ...props }: UserDrop) {
       {dropDownIsOpen && offsetSection && (
         <div
           style={{
-            top: `${offsetSection?.bottom}px`,
-            left: `${offsetSection?.left}px`,
+            top: `${offsetSection?.bottom + 20}px`,
+            left: `${offsetSection?.left - 120}px`,
           }}
-          className={`absolute`}
+          className={`absolute bg-white rounded-md shadow-md`}
         >
-          <DropDownMenuFunction />
+          {itens.map((itens, index) => {
+            return (
+              <div className="cursor-pointer p-4 hover:bg-[#e5e5e5] hover:text-[#a38c65] min-w-60 text-left">
+                <h1 className="text-[#333] font-bold text-sm" key={index}>{itens.value}</h1>
+              </div>
+            )
+          })}
         </div>
       )}
     </>

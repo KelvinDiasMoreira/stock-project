@@ -19,10 +19,6 @@ export default function UserDrop({ ...props }: UserDrop) {
   const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
   const [clickedFirstTime, setclickedFirstTime] = useState(false);
   const [closing, setClosing] = useState(false)
-  // const [offsetSection, setOffSetSection] = useState<{
-  //   left: number;
-  //   bottom: number;
-  // }>();
   const openDropDownMenu = () => {
     if (clickedFirstTime) {
       setClosing(true)
@@ -42,12 +38,6 @@ export default function UserDrop({ ...props }: UserDrop) {
       const sectionUser = window.document.getElementById("sectionUser");
       const dropdown = window.document.getElementById("dropdownId");
       const offsetSection = sectionUser?.getBoundingClientRect();
-      // const offsetDropdown = sectionUser?.getBoundingClientRect();
-
-      // setOffSetSection({
-      //   left: offsetSection!.x,
-      //   bottom: offsetSection!.bottom,
-      // });
       if (
         (offsetSection!.x > e.clientX ||
           offsetSection!.right < e.clientX ||
@@ -87,12 +77,11 @@ export default function UserDrop({ ...props }: UserDrop) {
         <div
           id="dropdownId"
           style={{
-            // top: `${offsetSection?.bottom + 5}px`,
-            // left: `${offsetSection?.left - 155}px`,
             top: `62px`,
             left: `1050px`,
           }}
-          className={`absolute ${closing && "animate-userDropDownAnimationOut"} ${dropDownIsOpen ? "animate-userDropDownAnimationIn" : "hidden"} bg-white rounded-md shadow-md min-w-[230px]`}
+          // 0 0 10px rgba(0,0,0,.161)
+          className={`absolute ${closing && "animate-userDropDownAnimationOut"} ${dropDownIsOpen ? "animate-userDropDownAnimationIn" : "hidden"} bg-white rounded-md shadow-[0px_0px_10px_rgba(0,0,0,.161)] min-w-[230px] `}
         >
           {itens.map((itens, index) => {
             return (

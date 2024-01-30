@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/app/api/api";
 import { Search } from "lucide-react";
-import { useRef, useState } from "react";
+import { ChangeEventHandler, HtmlHTMLAttributes, useState } from "react";
 import DropDown from "../DropDown";
 
 export default function SearchComponent() {
@@ -25,10 +25,13 @@ export default function SearchComponent() {
     }
   };
 
-  const handleInputToSearch = (event: any) => {
-    if (event.target.value.length > 2 && event.target.value.length < 6) {
-      getSearch(event.target.value);
-    } else if (event.target.value.length === 0) {
+  const handleInputToSearch = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    const eventTarget = event.target as HTMLInputElement;
+    if (eventTarget.value.length > 2 && eventTarget.value.length < 6) {
+      getSearch(eventTarget.value);
+    } else if (eventTarget.value.length === 0) {
       setSearchs(undefined);
     } else {
       return;
@@ -55,7 +58,8 @@ export default function SearchComponent() {
       </section>
 
       <DropDown
-        hidden={search ? false : true}
+        // hidden={search ? false : true}
+        hidden={false}
         itens={search}
         position={{
           bottom: Number(refComponentSearch?.getBoundingClientRect().bottom),

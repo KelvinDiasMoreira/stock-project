@@ -4,20 +4,34 @@ import { Search } from "lucide-react";
 import { ChangeEventHandler, HtmlHTMLAttributes, useState } from "react";
 import DropDown from "../DropDown";
 
+export interface GetSearchData {
+  stocks: Stocks[]
+}
+
+export interface Stocks{
+  stock: string
+  name: string
+  close: number
+  change: number
+  logo: string
+  type: string
+}
+
 export default function SearchComponent() {
-  const [search, setSearchs] = useState<string[] | undefined>(undefined);
+  const [search, setSearchs] = useState<Stocks[] | undefined>(undefined);
   const refComponentSearch = document.getElementById("sectionSearch");
 
   const getSearch = async (input: string) => {
     try {
-      const { data } = await api.get<{ indexes: string[]; stocks: string[] }>(
-        `available?search=${input}`,
+      const { data } = await api.get< GetSearchData >(
+        `quote/list?search=${input}`,
         {
           params: {
             token: `${process.env.secret}`,
           },
         }
       );
+      console.log(data)
       setSearchs(data.stocks);
       return;
     } catch (err) {

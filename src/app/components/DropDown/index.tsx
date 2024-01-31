@@ -1,5 +1,7 @@
+import { Stocks } from "../SerchComponent";
+
 interface DropDownProps {
-  itens: string[] | undefined;
+  itens: Stocks[] | undefined;
   position: { bottom: number; left: number; right: number };
   hidden: boolean;
 }
@@ -8,7 +10,7 @@ export default function DropDown({ itens, position, hidden }: DropDownProps) {
   if (hidden) {
     return <></>;
   } else if (!itens?.length) {
-    itens?.push("Não encontrado nenhum resultado");
+    return <></>
   } else {
     return (
       <div
@@ -20,16 +22,25 @@ export default function DropDown({ itens, position, hidden }: DropDownProps) {
       >
         {itens &&
           itens.map((i, index: number) => (
-            <div
+            <main
               className={`${index === 0 && "hover:rounded-t-xl"} ${
                 index === itens.lastIndexOf(itens[itens.length - 1])
                   ? "hover:rounded-b-xl"
                   : "border-b-[1px]"
-              } cursor-pointer p-3 hover:bg-[#e5e5e5] duration-500`}
-              key={i}
+              } cursor-pointer p-3 hover:bg-[#e5e5e5] duration-500 flex gap-2`}
+              key={i.stock}
             >
-              {i}
-            </div>
+              <img src={`${i.logo}`}/>
+              <div className="flex flex-col">
+              <section>
+                <h3 className="text-sm text-#333 font-normal">{i.stock} -</h3>
+              </section>
+              <div>
+                <span className="text-[#999] font-bold text-sm">R$ {(i.close.toFixed(2).toString().replace('.', ','))} </span>
+              </div>
+
+              </div>
+            </main>
           ))}
       </div>
     );

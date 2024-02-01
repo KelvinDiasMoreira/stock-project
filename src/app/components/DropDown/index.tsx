@@ -1,4 +1,6 @@
+import { ArrowDownRight, ArrowUpRight, MoveUpRight } from "lucide-react";
 import { Stocks } from "../SerchComponent";
+import { Router } from "next/router";
 
 interface DropDownProps {
   itens: Stocks[] | undefined;
@@ -10,7 +12,7 @@ export default function DropDown({ itens, position, hidden }: DropDownProps) {
   if (hidden) {
     return <></>;
   } else if (!itens?.length) {
-    return <></>
+    return <></>;
   } else {
     return (
       <div
@@ -27,18 +29,41 @@ export default function DropDown({ itens, position, hidden }: DropDownProps) {
                 index === itens.lastIndexOf(itens[itens.length - 1])
                   ? "hover:rounded-b-xl"
                   : "border-b-[1px]"
-              } cursor-pointer p-3 hover:bg-[#e5e5e5] duration-500 flex gap-2`}
+              } cursor-pointer p-3 hover:bg-[#e5e5e5] duration-500 flex gap-5`}
               key={i.stock}
             >
-              <img src={`${i.logo}`}/>
-              <div className="flex flex-col">
-              <section>
-                <h3 className="text-sm text-#333 font-normal">{i.stock} -</h3>
-              </section>
-              <div>
-                <span className="text-[#999] font-bold text-sm">R$ {(i.close.toFixed(2).toString().replace('.', ','))} </span>
-              </div>
-
+              <img src={`${i.logo}`} />
+              <div className="flex flex-col gap-3">
+                <section>
+                  <h3 className="text-sm text-#333">
+                    <strong>{i.stock}</strong> - {i.name}
+                  </h3>
+                </section>
+                <article className="flex gap-5">
+                  <span className="text-[#999] font-bold text-sm">
+                    R$ {i.close.toFixed(2).toString().replace(".", ",")}
+                  </span>
+                  <div className="flex items-center">
+                    <h3
+                      className={`${
+                        i.change < 0 ? "text-[#f24242]" : "text-[#20ac25]"
+                      } font-bold text-sm`}
+                    >
+                      {i.change.toFixed(2).toString().replace(".", ",")}%
+                    </h3>
+                    <span
+                      className={`${
+                        i.change < 0 ? "text-[#f24242]" : "text-[#20ac25]"
+                      } flex items-center`}
+                    >
+                      {i.change < 0 ? (
+                        <ArrowDownRight size={18} />
+                      ) : (
+                        <ArrowUpRight size={18} />
+                      )}
+                    </span>
+                  </div>{" "}
+                </article>
               </div>
             </main>
           ))}

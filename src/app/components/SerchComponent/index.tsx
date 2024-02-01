@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/app/api/api";
 import { Search } from "lucide-react";
-import { ChangeEventHandler, HtmlHTMLAttributes, useState } from "react";
+import { useState } from "react";
 import DropDown from "../DropDown";
 
 export interface GetSearchData {

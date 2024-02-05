@@ -1,6 +1,7 @@
+'use client'
 import { ArrowDownRight, ArrowUpRight, MoveUpRight } from "lucide-react";
 import { Stocks } from "../SerchComponent";
-import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface DropDownProps {
   itens: Stocks[] | undefined;
@@ -9,6 +10,12 @@ interface DropDownProps {
 }
 
 export default function DropDown({ itens, position, hidden }: DropDownProps) {
+  const router = useRouter()
+
+  const sendUserToNewRoute = (stock: string) => {
+    router.push(`stock/${stock.toLowerCase()}`)
+  }
+
   if (hidden) {
     return <></>;
   } else if (!itens?.length) {
@@ -31,6 +38,7 @@ export default function DropDown({ itens, position, hidden }: DropDownProps) {
                   : "border-b-[1px]"
               } cursor-pointer p-3 hover:bg-[#e5e5e5] duration-500 flex gap-5`}
               key={i.stock}
+              onClick={() => sendUserToNewRoute(i.stock)}
             >
               <img src={`${i.logo}`} />
               <div className="flex flex-col gap-3">

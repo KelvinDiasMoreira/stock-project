@@ -31,7 +31,6 @@ export default function SearchComponent() {
           },
         }
       );
-      console.log(data)
       setSearchs(data.stocks);
       return;
     } catch (err) {
@@ -72,8 +71,8 @@ export default function SearchComponent() {
       </section>
 
       <DropDown
-        // hidden={search ? false : true}
-        hidden={false}
+        hidden={search ? false : true}
+        // hidden={false}
         itens={search}
         position={{
           bottom: Number(refComponentSearch?.getBoundingClientRect().bottom),

@@ -1,5 +1,5 @@
 import SearchComponent from "./components/SerchComponent";
-// import Ranking from "./components/Ranking";
+
 
 export default function Home() {
   return (

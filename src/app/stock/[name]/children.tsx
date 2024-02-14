@@ -67,7 +67,7 @@ export default function Children({ paramToSearch }: ChildrenProps) {
     refetchOnReconnect: false,
     staleTime: 1 * 60000 * 40,
   });
-  //   console.log("🚀 ~ Children ~ data:", data);
+    console.log("🚀 ~ Children ~ data:", data);
   const navigatorOption: { icon: React.ReactNode; name: string }[] = [
     {
       icon: (
@@ -114,7 +114,7 @@ export default function Children({ paramToSearch }: ChildrenProps) {
       </header>
       <section className="flex flex-col">
         <div className="flex justify-center">
-          <CardInfoStock />
+          <CardInfoStock name="COTAÇÃO" value={data?.regularMarketPrice.toFixed(2).toString().replace('.', ',') ?? undefined} isMoney textTooltip="testee"/>
         </div>
       </section>
     </div>

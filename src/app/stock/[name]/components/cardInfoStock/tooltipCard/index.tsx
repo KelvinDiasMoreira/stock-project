@@ -21,7 +21,7 @@ const reduce = (
     state.left = action.payload;
 
   //TODO: verify why is not working when i use objects literals and how can we do to do this run without this ifs;
-  // objectToReduce[action.type](action.payload, action.type)
+//   objectToReduce[action.type](action.payload, action.type)
   return state;
 };
 interface TooltipCardProps {

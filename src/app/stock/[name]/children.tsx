@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BarChart2Icon, Building, Waypoints } from "lucide-react";
 import Navigator from "./components/navigator";
 import CardInfoStock from "./components/cardInfoStock";
+import { formatDate } from "@/app/utils/formatDate";
 
 interface ChildrenProps {
   paramToSearch: string;
@@ -40,6 +41,7 @@ interface StockData {
   priceEarnings: number;
   earningsPerShare: number;
   logourl: string;
+  lastDate: string;
 }
 
 interface StockAPIResponse {
@@ -54,6 +56,7 @@ export default function Children({ paramToSearch }: ChildrenProps) {
       const { data } = await api.get<StockAPIResponse>(
         `quote/${paramToSearch}?token=${process.env.secretGet}`
       );
+      data.results[0].lastDate = new Date().toISOString();
       return data.results[0];
     } catch (err) {
       console.log(err);
@@ -67,7 +70,7 @@ export default function Children({ paramToSearch }: ChildrenProps) {
     refetchOnReconnect: false,
     staleTime: 1 * 60000 * 40,
   });
-    console.log("🚀 ~ Children ~ data:", data);
+  console.log("🚀 ~ Children ~ data:", data);
   const navigatorOption: { icon: React.ReactNode; name: string }[] = [
     {
       icon: (
@@ -84,6 +87,7 @@ export default function Children({ paramToSearch }: ChildrenProps) {
       name: "EMPRESA",
     },
   ];
+
   return (
     <div className="h-dvh bg-[#eaeaea] flex flex-col gap-10">
       <header className="bg-[#293038] w-full h-[8.5rem] flex justify-center">
@@ -114,7 +118,19 @@ export default function Children({ paramToSearch }: ChildrenProps) {
       </header>
       <section className="flex flex-col">
         <div className="flex justify-center">
-          <CardInfoStock name="COTAÇÃO" value={data?.regularMarketPrice.toFixed(2).toString().replace('.', ',') ?? undefined} isMoney textTooltip="testee"/>
+          <CardInfoStock
+            name="COTAÇÃO"
+            value={
+              data?.regularMarketPrice
+                .toFixed(2)
+                .toString()
+                .replace(".", ",") ?? undefined
+            }
+            isMoney
+            textTooltip={`Ultima atualização: ${formatDate(
+              String(data?.lastDate)
+            )}`}
+          />
         </div>
       </section>
     </div>
